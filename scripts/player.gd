@@ -24,26 +24,33 @@ func _physics_process(delta: float) -> void:
 
     velocity = Input.get_vector("ui_left","ui_right","ui_up","ui_down") * SPEED
 
+
+
     move_and_slide()
+    look_at(get_global_mouse_position())
 
-    PlayerInfo.create(owner_id,global_position).send(NetworkHandler.server_peer)
+    PlayerInfo.create(owner_id,global_position,rotation).send(NetworkHandler.server_peer)
 
 
-
+# server updates positions and broadcasts the positions
 func server_handle_position(peer_id: int,player_info: PlayerInfo):
 
     if owner_id != peer_id: return
 
-    global_position = player_info.position
+    global_position = global_position.lerp(player_info.position, 0.3)
+    rotation = lerp_angle(rotation, player_info.rotation, 0.3)
 
-    PlayerInfo.create(owner_id,global_position).broadcast(NetworkHandler.connection)
+
+    PlayerInfo.create(owner_id,global_position,rotation).broadcast(NetworkHandler.connection)
 
 
     
-
+# client only updates the position of al the players
 func client_handle_position(player_info: PlayerInfo):
 
-    if is_authority || owner_id != player_info.id: return
+    if is_authority || owner_id != player_info.id: return #only update position of the players packet
 
-    global_position = player_info.position
+    global_position = global_position.lerp(player_info.position, 0.3)
+    rotation = lerp_angle(rotation, player_info.rotation, 0.3)
+
 

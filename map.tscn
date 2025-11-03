@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dj00e5vbsln35"]
+
+[ext_resource type="Texture2D" uid="uid://drlvtckb5cr3l" path="res://sprites/hex_grid.png" id="1_c7s6e"]
+[ext_resource type="Script" uid="uid://lodj6blaowjx" path="res://map.gd" id="2_wijl4"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wijl4"]
+texture = ExtResource("1_c7s6e")
+margins = Vector2i(9, 8)
+separation = Vector2i(18, 32)
+texture_region_size = Vector2i(110, 96)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_e0an3"]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(111, 96)
+sources/1 = SubResource("TileSetAtlasSource_wijl4")
+
+[node name="map" type="TileMap"]
+tile_set = SubResource("TileSet_e0an3")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 1, 0, -65535, 1, 0, 1, 1, 1, 2, 1, 0, 65538, 1, 0, 65536, 1, 0, 65537, 1, 0, 65535, 65537, 0, 131074, 65537, 0, -131071, 65537, 0, -65534, 65537, 0, -65533, 65537, 0, 3, 65537, 0, 65539, 65537, 0, -65536, 65537, 0, -1, 65537, 0, 131071, 65537, 0, 131072, 65537, 0, 131073, 65537, 0, 196610, 1, 0, 5, 65537, 0, 6, 65537, 0, 65542, 65537, 0)
+script = ExtResource("2_wijl4")

@@ -1,16 +1,21 @@
 [gd_scene load_steps=4 format=3 uid="uid://dtjp7pq8xgvqn"]
 
 [ext_resource type="Script" uid="uid://lx25xeab1blj" path="res://scripts/player.gd" id="1_onrkg"]
-[ext_resource type="Texture2D" uid="uid://ri35c0el04m8" path="res://icon.svg" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://cg3yvkar04vgy" path="res://sprites/meneer_is_paprika.png" id="2_g2els"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hqtel"]
-radius = 58.6941
+radius = 70.1783
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(1, -1)
 script = ExtResource("1_onrkg")
 
 [node name="Icon" type="Sprite2D" parent="."]
-texture = ExtResource("2_i3pqv")
+position = Vector2(1.625, -7.08)
+rotation = 3.14159
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_g2els")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, -5)
 shape = SubResource("CircleShape2D_hqtel")

@@ -26,6 +26,8 @@ var connection: ENetConnection
 var is_server:bool = false
 
 
+var IP_ADRESS = "127.0.0.1"#"192.168.0.158"
+
 func _process(delta : float) -> void:
     if connection == null: return
 
@@ -65,7 +67,7 @@ func handle_events():
 
 
 
-func start_server(ip_adress: String = "127.0.0.1",port: int = 42010):
+func start_server(ip_adress: String = IP_ADRESS,port: int = 42010):
     connection = ENetConnection.new()
     var error: Error = connection.create_host_bound(ip_adress,port)
 
@@ -78,7 +80,7 @@ func start_server(ip_adress: String = "127.0.0.1",port: int = 42010):
     is_server = true
 
 
-func start_client(ip_adress: String = "127.0.0.1",port: int = 42010):
+func start_client(ip_adress: String = IP_ADRESS,port: int = 42010):
     connection = ENetConnection.new()
     var error: Error = connection.create_host(1)
 

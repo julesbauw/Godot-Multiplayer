@@ -7,14 +7,17 @@ var id: int
 
 var position: Vector2
 
+var rotation: float
 
-static func create(id: int, position: Vector2) -> PlayerInfo:
+static func create(id: int, position: Vector2,rotation:float) -> PlayerInfo:
 
     var info: PlayerInfo = PlayerInfo.new()
     info.packet_type = PACKET_TYPE.PLAYER_INFO
     info.flag = ENetPacketPeer.FLAG_UNSEQUENCED # UDP packet
     info.id = id
     info.position = position
+    info.rotation = rotation
+
     return info
 
 static func create_from_data(data:PackedByteArray) -> PlayerInfo:
@@ -24,15 +27,15 @@ static func create_from_data(data:PackedByteArray) -> PlayerInfo:
 
 
 func encode() -> PackedByteArray:
-    ### Make packet  |Packet_type|ID| X_Position (4 Bytes) |Y_Position (4 Bytes)
+    ### Make packet  |Packet_type|ID| X_Position (4 Bytes) |Y_Position (4 Bytes) | rotation (4 Bytes)
     var data: PackedByteArray = super.encode()
 
-    data.resize(10) # size of the packet is 10 Bytes
+    data.resize(14) # size of the packet is 14 Bytes
     data.encode_u8(1,id) 
     
     data.encode_float(2,position.x)
     data.encode_float(6,position.y)
-
+    data.encode_float(10,rotation)
     return data
 
 func decode(data: PackedByteArray) -> void:
@@ -43,4 +46,7 @@ func decode(data: PackedByteArray) -> void:
 
     var y = data.decode_float(6)
 
+    var new_rotation = data.decode_float(10)
+
     position = Vector2(x,y)
+    rotation = new_rotation
