@@ -1,8 +1,16 @@
 extends TileMap
 
+class_name Map
 
 
-
+var tile_list = [
+	Vector2i(0,0),
+	Vector2i(1,0),
+	Vector2i(2,0),
+	Vector2i(0,1),
+	Vector2i(1,1),
+	Vector2i(2,1),
+]
 
 func _ready() -> void:
 
@@ -13,6 +21,18 @@ func _ready() -> void:
 			set_cell(0,Vector2i(i,j),1,Vector2i(0,0))
 
 
-func _process(delta: float) -> void:
+#TODO network stuff
 
-	print(local_to_map(get_global_mouse_position()))
+func place_tile(tile:int,pos:Vector2) -> void:
+	
+	var map_pos:Vector2i = local_to_map(pos)
+
+
+	set_cell(0,map_pos,1,tile_list[tile])
+
+func remove_tile(pos:Vector2) -> void:
+
+	var map_pos:Vector2i = local_to_map(pos)
+
+	erase_cell(0,map_pos)
+

@@ -26,5 +26,7 @@ sources/1 = SubResource("TileSetAtlasSource_wijl4")
 [node name="map" type="TileMap"]
 tile_set = SubResource("TileSet_e0an3")
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 1, 0, -65535, 1, 0, 1, 1, 1, 2, 1, 0, 65538, 1, 0, 65536, 1, 0, 65537, 1, 0, 65535, 65537, 0, 131074, 65537, 0, -131071, 65537, 0, -65534, 65537, 0, -65533, 65537, 0, 3, 65537, 0, 65539, 65537, 0, -65536, 65537, 0, -1, 65537, 0, 131071, 65537, 0, 131072, 65537, 0, 131073, 65537, 0, 196610, 1, 0, 5, 65537, 0, 6, 65537, 0, 65542, 65537, 0)
+layer_0/z_index = -1
+layer_1/name = "Layer1"
+layer_1/z_index = -1
 script = ExtResource("2_wijl4")

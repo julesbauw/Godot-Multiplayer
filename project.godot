@@ -12,11 +12,15 @@ config_version=5
 
 config/name="Multiplayer Game"
 run/main_scene="uid://dl35fe7h65t66"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-NetworkHandler="*res://scripts/network_handler.gd"
-ClientNetworkGlobals="*res://scripts/client_network_globals.gd"
-ServerNetworkGlobals="*res://scripts/server_network_globals.gd"
+NetworkHandler="*res://scripts/network/network_handler.gd"
+ClientNetworkGlobals="*res://scripts/network/client_network_globals.gd"
+ServerNetworkGlobals="*res://scripts/network/server_network_globals.gd"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
