@@ -5,6 +5,8 @@ signal handle_local_id_assignment(local_id: int)
 signal handle_remote_id_assignment(remote_id: int)
 signal handle_player_info(player_info: PlayerInfo)
 
+signal handle_map_info(map_info: MapInfo)
+
 var id: int = -1
 
 var remote_ids: Array[int]
@@ -22,7 +24,8 @@ func on_client_packet(data: PackedByteArray) -> void:
         
         PacketInfo.PACKET_TYPE.PLAYER_INFO:
             handle_player_info.emit(PlayerInfo.create_from_data(data))
-
+        PacketInfo.PACKET_TYPE.MAP_INFO:
+            handle_map_info.emit(MapInfo.create_from_data(data))
         _:
             push_error("Packet type with index ",data[0], " unhandled!")
 

@@ -26,7 +26,8 @@ var connection: ENetConnection
 var is_server:bool = false
 
 
-var IP_ADRESS = "127.0.0.1"#"192.168.0.158"
+#var IP_ADRESS = "127.0.0.1"
+var IP_ADRESS = "192.168.0.158"
 
 func _process(delta : float) -> void:
     if connection == null: return

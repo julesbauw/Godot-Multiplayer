@@ -19,3 +19,5 @@ func destroy_tile(pos:Vector2) -> void:
 
 func place_tile(tile_id:int,pos:Vector2i) -> void:
 	map.place_tile(tile_id,pos)
+
+
