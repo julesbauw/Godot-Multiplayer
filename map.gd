@@ -44,6 +44,12 @@ func remove_tile(pos:Vector2) -> void:
 	MapInfo.create(map_pos,0).send(NetworkHandler.server_peer)
 
 
+func contains_tile(pos:Vector2) -> bool:
+	# returns wether this position contains a tile or not
+	var map_pos: Vector2i = local_to_map(pos)
+
+
+	return get_cell_tile_data(0,map_pos) != null
 
 # server updates  map and broadcasts
 func server_handle_map(peer_id: int,map_info: MapInfo):

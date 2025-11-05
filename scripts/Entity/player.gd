@@ -20,6 +20,8 @@ func _physics_process(delta: float) -> void:
 
 	if !is_authority: return
 
+	super._physics_process(delta)
+
 	velocity = Input.get_vector("ui_left","ui_right","ui_up","ui_down") * SPEED
 
 	look_at(get_global_mouse_position())
@@ -27,9 +29,10 @@ func _physics_process(delta: float) -> void:
 	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
 		destroy_tile(get_global_mouse_position())
 
+	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)):
+		place_tile(0,get_global_mouse_position())
 
 	PlayerInfo.create(owner_id,global_position,rotation).send(NetworkHandler.server_peer)
-	super._physics_process(delta)
 
 
 # server updates positions and broadcasts the positions
