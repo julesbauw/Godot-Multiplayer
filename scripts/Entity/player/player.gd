@@ -17,6 +17,7 @@ var owner_id:int
 #Attack
 
 @onready var attack_area:Area2D = $AttackArea
+@onready var camera:Camera2D = $Camera2D
 
 func _enter_tree() -> void:
 	ServerNetworkGlobals.handle_player_info.connect(server_handle_position)
@@ -31,6 +32,10 @@ func _exit_tree() -> void:
 	ClientNetworkGlobals.handle_attack_info.disconnect(client_handle_attack)
 
 
+func _ready() -> void:
+	if is_authority:
+		camera.make_current()
+		camera.enabled = true
 
 # server updates positions and broadcasts the positions
 func server_handle_position(peer_id: int,player_info: PlayerInfo):

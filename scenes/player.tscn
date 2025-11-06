@@ -52,4 +52,8 @@ position = Vector2(86.666664, -3.333333)
 shape = SubResource("RectangleShape2D_tuyoq")
 debug_color = Color(0.8063834, 0, 0.21508294, 0.41960785)
 
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+position_smoothing_enabled = true
+
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

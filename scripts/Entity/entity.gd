@@ -6,7 +6,6 @@ class_name Entity
 
 @onready var map:Map = get_tree().get_current_scene().get_node_or_null("Map") as Map
 
-var falling:bool = false
 
 
 var knock_back_direcion:Vector2 = Vector2.ZERO
@@ -15,17 +14,12 @@ var knock_back_time:float = 0.0
 
 var knock_back_force:float = 0.0
 
-func _ready() -> void:
-	falling = false
-	
-func _physics_process(delta: float) -> void:
-	
 
 	
+func _physics_process(delta: float) -> void:	
 	if velocity:
 		move_and_slide()
-		
-		falling = true
+
 	
 
 
