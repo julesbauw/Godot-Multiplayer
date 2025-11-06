@@ -4,6 +4,7 @@ extends Node
 signal handle_player_info(peer_id: int, player_info: PlayerInfo)
 
 signal handle_map_info(peer_id: int, map_info: MapInfo)
+signal handle_attack_info(peer_id:int,attack_info:AttackInfo)
 
 var peer_ids: Array[int]
 
@@ -31,5 +32,7 @@ func on_server_packet(peer_id: int, data: PackedByteArray) -> void:
 			handle_player_info.emit(peer_id, PlayerInfo.create_from_data(data))
 		PacketInfo.PACKET_TYPE.MAP_INFO:
 			handle_map_info.emit(peer_id, MapInfo.create_from_data(data))
+		PacketInfo.PACKET_TYPE.ATTACK_INFO:
+			handle_attack_info.emit(peer_id,AttackInfo.create_from_data(data))
 		_:
 			push_error("Packet type with index ", data[0], " unhandled!")

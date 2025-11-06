@@ -8,6 +8,7 @@ enum PACKET_TYPE {
 	ID_ASSIGNMENT = 0,
 	PLAYER_INFO = 1,
 	MAP_INFO = 2,
+	ATTACK_INFO = 3,
 }
 
 

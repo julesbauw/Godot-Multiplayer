@@ -21,11 +21,14 @@ var owner_id:int
 func _enter_tree() -> void:
 	ServerNetworkGlobals.handle_player_info.connect(server_handle_position)
 	ClientNetworkGlobals.handle_player_info.connect(client_handle_position)
+	ServerNetworkGlobals.handle_attack_info.connect(server_handle_attack)
+	ClientNetworkGlobals.handle_attack_info.connect(client_handle_attack)
 
 func _exit_tree() -> void:
 	ServerNetworkGlobals.handle_player_info.disconnect(server_handle_position)
 	ClientNetworkGlobals.handle_player_info.disconnect(client_handle_position)
-
+	ServerNetworkGlobals.handle_attack_info.disconnect(server_handle_attack)
+	ClientNetworkGlobals.handle_attack_info.disconnect(client_handle_attack)
 
 
 
@@ -57,4 +60,24 @@ func attack():
 func _on_attack_area_body_entered(body: Node2D) -> void:
 
 	if body is Player:
-		print(body.owner_id)
+		if body.owner_id != owner_id:
+			var knock_back_dir:Vector2 =(body.global_position - global_position).normalized()
+			AttackInfo.create(body.owner_id,knock_back_dir,15,0.33).send(NetworkHandler.server_peer)
+
+
+func server_handle_attack(peer_id: int,attack_info: AttackInfo):
+
+	if owner_id != attack_info.id: return
+
+	apply_kock_back(attack_info.knock_back_direcion,attack_info.force,attack_info.knock_back_time)
+
+	attack_info.broadcast(NetworkHandler.connection)
+
+
+	
+# client only updates the position of al the players
+func client_handle_attack(attack_info:AttackInfo):
+
+	if owner_id != attack_info.id: return #only attack player with the right id
+
+	apply_kock_back(attack_info.knock_back_direcion,attack_info.force,attack_info.knock_back_time)
