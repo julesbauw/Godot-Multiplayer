@@ -1,5 +1,6 @@
 extends Entity
 
+class_name Player
 
 var time_accumulated := 0.0
 const NETWORK_RATE := 0.05 # 20 Hz, position update send to server per second
@@ -13,6 +14,9 @@ var is_authority: bool:
 
 var owner_id:int
 
+#Attack
+
+@onready var attack_area:Area2D = $AttackArea
 
 func _enter_tree() -> void:
 	ServerNetworkGlobals.handle_player_info.connect(server_handle_position)
@@ -23,30 +27,6 @@ func _exit_tree() -> void:
 	ClientNetworkGlobals.handle_player_info.disconnect(client_handle_position)
 
 
-func _physics_process(delta: float) -> void:
-
-	# Other players
-	if !is_authority:
-		global_position = global_position.lerp(target_position,0.1)
-		rotation = lerp_angle(rotation,target_rotation,0.1)
-		return
-
-	super._physics_process(delta)
-
-	velocity = Input.get_vector("ui_left","ui_right","ui_up","ui_down") * SPEED
-
-	look_at(get_global_mouse_position())
-
-	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
-		destroy_tile(get_global_mouse_position())
-
-	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)):
-		place_tile(0,get_global_mouse_position())
-
-	time_accumulated += delta
-	if time_accumulated >= NETWORK_RATE:
-		time_accumulated = 0.0
-		PlayerInfo.create(owner_id,global_position,rotation).send(NetworkHandler.server_peer)
 
 
 # server updates positions and broadcasts the positions
@@ -68,3 +48,13 @@ func client_handle_position(player_info: PlayerInfo):
 
 	target_position = player_info.position
 	target_rotation = player_info.rotation
+
+func attack():
+	attack_area.monitoring = true
+	await get_tree().create_timer(0.1).timeout  
+	attack_area.monitoring = false 
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+
+	if body is Player:
+		print(body.owner_id)

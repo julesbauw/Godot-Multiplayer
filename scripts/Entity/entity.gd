@@ -8,20 +8,22 @@ class_name Entity
 
 var falling:bool = false
 
+
+var knock_back_direcion:Vector2 = Vector2.ZERO
+
+var knock_back_time:float = 0.0
+
+var knock_back_force:float = 0.0
+
 func _ready() -> void:
 	falling = false
-	print(map)
 	
 func _physics_process(delta: float) -> void:
 	
-	if falling:
-		scale.x *= 0.95
-		scale.y *= 0.95
-		return
+
 	
 	if velocity:
 		move_and_slide()
-	if !map.contains_tile(global_position):
 		
 		falling = true
 	
@@ -34,3 +36,7 @@ func place_tile(tile_id:int,pos:Vector2i) -> void:
 	map.place_tile(tile_id,pos)
 
 
+func apply_kock_back(direction:Vector2,force:float,time:float):
+	knock_back_direcion = direction
+	knock_back_force =force
+	knock_back_time = time
